@@ -1,15 +1,23 @@
 import { Link } from 'react-router-dom';
 
-import Card from '../../components/card';
+import OffersList from '../../components/offers-list';
 
 import { City, SortingTypes } from '../../constants';
 import { Helmet } from 'react-helmet-async';
+import { OfferCard } from '../../types';
+import { useState } from 'react';
 
 type MainPageProps = {
-  offers: number;
+  offersNumber: number;
+  data: OfferCard[];
 };
 
-export default function MainPage({ offers }: MainPageProps): JSX.Element {
+export default function MainPage({
+  offersNumber,
+  data,
+}: MainPageProps): JSX.Element {
+  const [, setActiveCard] = useState<number | null>(null);
+
   return (
     <>
       <Helmet>
@@ -35,7 +43,7 @@ export default function MainPage({ offers }: MainPageProps): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {offers} places to stay in Amsterdam
+                {offersNumber} places to stay in Amsterdam
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
@@ -60,11 +68,7 @@ export default function MainPage({ offers }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                <OffersList data={data} setActiveCard={setActiveCard} />
               </div>
             </section>
             <div className="cities__right-section">

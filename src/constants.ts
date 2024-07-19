@@ -2,7 +2,7 @@ export const AppRoute = {
   Login: '/login',
   Root: '/',
   Favorites: '/favorites',
-  Offer: '/offer/:id',
+  Offer: '/offer',
   Error: '*'
 } as const;
 
@@ -47,3 +47,15 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
+
+export const CommentRatingStars = [
+  'perfect',
+  'good',
+  'not bad',
+  'badly',
+  'terribly'
+] as const
+
+export const MAX_RATING_STARS = 5;
+
+export const MAX_REVIEW_LENGTH = 50;

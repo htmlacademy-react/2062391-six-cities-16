@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 
 import App from './components/app';
 
+import { mocksData } from './mocks/offers';
+
 const offersNumber = 5;
 
 const root = ReactDOM.createRoot(
@@ -11,6 +13,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offers={offersNumber} />
+    <App offersNumber={offersNumber} data={mocksData} />
   </React.StrictMode>
 );
