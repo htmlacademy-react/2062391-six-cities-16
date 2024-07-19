@@ -8,29 +8,38 @@ import LoginPage from '../../pages/login';
 import OfferPage from '../../pages/offer';
 import FavoritesPage from '../../pages/favorites';
 
+import ScrollToTop from '../scroll-to-top';
 import PrivateRoute from '../private-route';
 import { AppRoute, AuthorizationStatus } from '../../constants';
+import { OfferCard } from '../../types';
 
 type AppsParams = {
-  offers: number;
+  offersNumber: number;
+  data: OfferCard[];
 };
 
-export default function App({ offers }: AppsParams): JSX.Element {
+export default function App({ offersNumber, data }: AppsParams): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path={AppRoute.Root} element={<Layout />}>
-            <Route index element={<MainPage offers={offers} />} />
+            <Route
+              index
+              element={<MainPage offersNumber={offersNumber} data={data} />}
+            />
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                  <FavoritesPage />
+                <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                  <FavoritesPage
+                    data={data.filter((offer) => offer.isFavorite === true)}
+                  />
                 </PrivateRoute>
               }
             />
-            <Route path={AppRoute.Offer} element={<OfferPage />} />
+            <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage />} />
           </Route>
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route path={AppRoute.Error} element={<ErrorPage />} />
